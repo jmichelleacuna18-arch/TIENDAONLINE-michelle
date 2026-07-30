@@ -101,6 +101,26 @@
             border-color: var(--primary-color);
         }
 
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #2a2a2a;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.03);
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
         .product-info {
             padding: 20px;
             flex-grow: 1;
@@ -409,6 +429,9 @@
             
             <!-- PRODUCTO 1 -->
             <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/garganta.jpg" alt="Obturadores y Gargantas Electrónicas" class="product-image">
+                </div>
                 <div class="product-info">
                     <span class="product-tag">Garantizado</span>
                     <div class="product-title">Obturadores y Gargantas Electrónicas</div>
@@ -422,6 +445,9 @@
 
             <!-- PRODUCTO 2 -->
             <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/ecu.jpg" alt="Ecus, Computadoras o Cerebros" class="product-image">
+                </div>
                 <div class="product-info">
                     <span class="product-tag">Importación</span>
                     <div class="product-title">Ecus, Computadoras o Cerebros</div>
@@ -435,6 +461,9 @@
 
             <!-- PRODUCTO 3 -->
             <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/sensores.jpg" alt="Sensores MAF / Oxígeno / Presión" class="product-image">
+                </div>
                 <div class="product-info">
                     <span class="product-tag">Sensores</span>
                     <div class="product-title">Sensores MAF / Oxígeno / Presión</div>
@@ -448,6 +477,9 @@
 
             <!-- PRODUCTO 4 -->
             <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/motores.jpg" alt="Motores Completos y Pelados" class="product-image">
+                </div>
                 <div class="product-info">
                     <span class="product-tag">Con Póliza</span>
                     <div class="product-title">Motores Completos y Pelados</div>
