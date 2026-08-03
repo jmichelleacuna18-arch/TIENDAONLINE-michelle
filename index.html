@@ -425,71 +425,6 @@
 
         <!-- SECCIÓN DE PRODUCTOS -->
         <h2 style="margin-bottom: 20px; font-size: 1.5rem; border-left: 4px solid var(--primary-color); padding-left: 10px;">Catálogo de Repuestos Electrónicos</h2>
-        <div class="products-grid">
-            
-            <!-- PRODUCTO 1 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="images/garganta.jpg" alt="Obturadores y Gargantas Electrónicas" class="product-image">
-                </div>
-                <div class="product-info">
-                    <span class="product-tag">Garantizado</span>
-                    <div class="product-title">Obturadores y Gargantas Electrónicas</div>
-                    <div class="product-desc">Control de aceleración preciso por chicotillo y electrónico. Configurable según modelo.</div>
-                    <div class="product-price">1,500 BS <span>*Precio ref (600 - 2500 BS)</span></div>
-                </div>
-                <button class="btn-add" onclick="addToCart('Obturador/Garganta Electrónica', 1500)">
-                    <span>Agregar al Pedido</span>
-                </button>
-            </div>
-
-            <!-- PRODUCTO 2 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="images/ecu.jpg" alt="Ecus, Computadoras o Cerebros" class="product-image">
-                </div>
-                <div class="product-info">
-                    <span class="product-tag">Importación</span>
-                    <div class="product-title">Ecus, Computadoras o Cerebros</div>
-                    <div class="product-desc">Módulos de control de motor para marcas Chinas, Japonesas y Americanas.</div>
-                    <div class="product-price">2,400 BS <span>*Precio ref (800 - 4000 BS)</span></div>
-                </div>
-                <button class="btn-add" onclick="addToCart('Ecu / Computadora de Motor', 2400)">
-                    <span>Agregar al Pedido</span>
-                </button>
-            </div>
-
-            <!-- PRODUCTO 3 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="images/sensores.jpg" alt="Sensores MAF / Oxígeno / Presión" class="product-image">
-                </div>
-                <div class="product-info">
-                    <span class="product-tag">Sensores</span>
-                    <div class="product-title">Sensores MAF / Oxígeno / Presión</div>
-                    <div class="product-desc">Flujo de aire, presión absoluta, aceleración, velocidad y temperatura de motor.</div>
-                    <div class="product-price">1,100 BS <span>*Precio ref (700 - 1500 BS)</span></div>
-                </div>
-                <button class="btn-add" onclick="addToCart('Kit Sensor Electrónico (MAF/Oxígeno)', 1100)">
-                    <span>Agregar al Pedido</span>
-                </button>
-            </div>
-
-            <!-- PRODUCTO 4 -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="images/motores.jpg" alt="Motores Completos y Pelados" class="product-image">
-                </div>
-                <div class="product-info">
-                    <span class="product-tag">Con Póliza</span>
-                    <div class="product-title">Motores Completos y Pelados</div>
-                    <div class="product-desc">Bloques importados legalmente listos para instalación en tu vehículo.</div>
-                    <div class="product-price">Solicitar Cotización <span>(Según cilindrada)</span></div>
-                </div>
-                <button class="btn-add" onclick="openWhatsAppQuote('Motores Completos y Pelados')">
-                    <span>Cotizar por WhatsApp</span>
-                </button>
-            </div>
 
         </div>
     </div>
@@ -527,6 +462,78 @@
         // LÓGICA DEL CARRITO EN JAVASCRIPT VANILLA
         let cart = [];
         const waNumber = "59177654333";
+
+        async function loadProducts() {
+            try {
+                // Usar cache-busting para que cargue instantáneamente si se modifica productos.json
+                const response = await fetch(`productos.json?_t=${Date.now()}`);
+                if (!response.ok) {
+                    throw new Error('Error al cargar productos.json');
+                }
+                const products = await response.json();
+                renderProducts(products);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('products-container').innerHTML =
+                    '<p style="color: var(--text-gray); text-align: center; grid-column: 1 / -1; padding: 40px;">No se pudieron cargar los productos en este momento.</p>';
+            }
+        }
+
+        function renderProducts(products) {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            // Paso #3: Ocultar producto si disponibilidad es false
+            const visibleProducts = products.filter(p => p.disponibilidad === true);
+
+            if (visibleProducts.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-gray); text-align: center; grid-column: 1 / -1; padding: 40px;">No hay productos disponibles por el momento.</p>';
+                return;
+            }
+
+            visibleProducts.forEach(product => {
+                // Preparar tag
+                const tagHtml = product.tag ? `<span class="product-tag">${product.tag}</span>` : '';
+
+                // Preparar precio
+                let priceHtml = '';
+                if (product.precio !== null && product.precio !== undefined) {
+                    priceHtml = `${product.precio.toLocaleString('es-ES')} ${product.moneda}`;
+                } else {
+                    priceHtml = 'Solicitar Cotización';
+                }
+                if (product.precio_ref) {
+                    priceHtml += ` <span>${product.precio_ref}</span>`;
+                }
+
+                // Preparar imagen (mostrar solo si está definida y no vacía)
+                const imageHtml = product.imagen_url ? `<img src="${product.imagen_url}" alt="${product.nombre}" style="width: 100%; height: 200px; object-fit: cover; display: block;">` : '';
+
+                // Preparar botón de acción
+                const isQuote = product.whatsapp_only || product.precio === null || product.precio === undefined;
+                const buttonName = product.cart_nombre || product.nombre;
+                const buttonHtml = isQuote
+                    ? `<button class="btn-add" onclick="openWhatsAppQuote('${buttonName}')"><span>Cotizar por WhatsApp</span></button>`
+                    : `<button class="btn-add" onclick="addToCart('${buttonName}', ${product.precio})"><span>Agregar al Pedido</span></button>`;
+
+                const cardHtml = `
+                    <div class="product-card" id="prod-${product.id}">
+                        ${imageHtml}
+                        <div class="product-info">
+                            ${tagHtml}
+                            <div class="product-title">${product.nombre}</div>
+                            <div class="product-desc">${product.descripcion}</div>
+                            <div class="product-price">${priceHtml}</div>
+                        </div>
+                        ${buttonHtml}
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        // Llamar a loadProducts cuando el DOM esté completamente cargado
+        window.addEventListener('DOMContentLoaded', loadProducts);
 
         function toggleCart() {
             document.getElementById('cart-drawer').classList.toggle('open');

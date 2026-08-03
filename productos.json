@@ -1,0 +1,54 @@
+[
+  {
+    "id": "rep-001",
+    "nombre": "Obturadores y Gargantas Electrónicas",
+    "precio": 1500,
+    "moneda": "BS",
+    "descripcion": "Control de aceleración preciso por chicotillo y electrónico. Configurable según modelo.",
+    "imagen_url": "",
+    "disponibilidad": true,
+    "tag": "Garantizado",
+    "precio_ref": "*Precio ref (600 - 2500 BS)",
+    "cart_nombre": "Obturador/Garganta Electrónica",
+    "whatsapp_only": false
+  },
+  {
+    "id": "rep-002",
+    "nombre": "Ecus, Computadoras o Cerebros",
+    "precio": 2400,
+    "moneda": "BS",
+    "descripcion": "Módulos de control de motor para marcas Chinas, Japonesas y Americanas.",
+    "imagen_url": "",
+    "disponibilidad": true,
+    "tag": "Importación",
+    "precio_ref": "*Precio ref (800 - 4000 BS)",
+    "cart_nombre": "Ecu / Computadora de Motor",
+    "whatsapp_only": false
+  },
+  {
+    "id": "rep-003",
+    "nombre": "Sensores MAF / Oxígeno / Presión",
+    "precio": 1100,
+    "moneda": "BS",
+    "descripcion": "Flujo de aire, presión absoluta, aceleración, velocidad y temperatura de motor.",
+    "imagen_url": "",
+    "disponibilidad": true,
+    "tag": "Sensores",
+    "precio_ref": "*Precio ref (700 - 1500 BS)",
+    "cart_nombre": "Kit Sensor Electrónico (MAF/Oxígeno)",
+    "whatsapp_only": false
+  },
+  {
+    "id": "rep-004",
+    "nombre": "Motores Completos y Pelados",
+    "precio": null,
+    "moneda": "BS",
+    "descripcion": "Bloques importados legalmente listos para instalación en tu vehículo.",
+    "imagen_url": "",
+    "disponibilidad": true,
+    "tag": "Con Póliza",
+    "precio_ref": "(Según cilindrada)",
+    "cart_nombre": "Motores Completos y Pelados",
+    "whatsapp_only": true
+  }
+]
